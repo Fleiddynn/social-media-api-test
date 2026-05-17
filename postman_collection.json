@@ -1,0 +1,1330 @@
+{
+  "info": {
+    "_postman_id": "d2f8b0f1-4c12-4c6e-8d8d-3c8c7f9d8f8e",
+    "name": "Social Media API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. User A Kaydı",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "var _ = require('lodash');",
+              "pm.collectionVariables.set(\"userA_email\", \"Muzo_\" + _.random(1, 100000) + \"@Test.com\");",
+              "pm.collectionVariables.set(\"userA_username\", \"muzo_\" + _.random(1, 100000));"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Kayıt başarılı - token döndü (200)\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('token');",
+              "    pm.collectionVariables.set('tokenA', body.token);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"{{userA_username}}\",\n    \"email\": \"{{userA_email}}\",\n    \"password\": \"gecerlisifre123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "2. Küçük Harfle Giriş Denemesi",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "var orig = pm.collectionVariables.get('userA_email');",
+              "pm.collectionVariables.set('userA_email_lower', orig.toLowerCase());"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Kullanıcı küçük harfle de giriş yapabilmeli\", function () {",
+              "    pm.response.to.have.status(200);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"{{userA_email_lower}}\",\n    \"password\": \"gecerlisifre123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "3. Orijinal E-posta ile Giriş",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Doğru e-posta ve şifre ile giriş başarılı (200)\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('token');",
+              "    pm.collectionVariables.set('tokenA', body.token);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"{{userA_email}}\",\n    \"password\": \"gecerlisifre123\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Yanlış Şifre ile Giriş Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Yanlış şifre 400 Bad Request döndürmeli\", function () {",
+              "    pm.response.to.have.status(400);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('msg');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"{{userA_email}}\",\n    \"password\": \"yanlisSifre999\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/login",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. Eksik Alan ile Kayıt Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Eksik alan ile kayıt 400 Bad Request döndürmeli\", function () {",
+              "    pm.response.to.have.status(400);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('msg');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"email\": \"eksik@test.com\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "6. Profil Bilgilerini Getir",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Profil başarıyla getirildi (200)\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('username');",
+              "    pm.expect(body).to.have.property('email');",
+              "    pm.expect(body).to.not.have.property('password');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/profile",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "profile"
+          ]
+        }
+      }
+    },
+    {
+      "name": "7. Token Olmadan Profil Getirme Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Token olmadan profil isteği 401 Unauthorized döndürmeli\", function () {",
+              "    pm.response.to.have.status(401);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/profile",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "profile"
+          ]
+        }
+      }
+    },
+    {
+      "name": "8. Gönderi Oluştur",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Gönderi başarıyla oluşturuldu (201)\", function () {",
+              "    pm.response.to.have.status(201);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('id');",
+              "    pm.expect(body).to.have.property('content');",
+              "    pm.collectionVariables.set('postIdA', body.id);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"content\": \"Bu post soft-delete testi için silinecektir.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/posts",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "9. Token Olmadan Gönderi Oluşturma Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Token olmadan gönderi oluşturma 401 döndürmeli\", function () {",
+              "    pm.response.to.have.status(401);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"content\": \"Yetkisiz gönderi denemesi.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/posts",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "10. Boş İçerik ile Gönderi Oluşturma Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Boş içerikli gönderi 400 Bad Request döndürmeli\", function () {",
+              "    pm.response.to.have.status(400);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('msg');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"content\": \"\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/posts",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "11. Gönderileri Listele",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Gönderi listesi başarıyla döndü (200)\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.be.an('array');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/posts",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts"
+          ]
+        }
+      }
+    },
+    {
+      "name": "12. Gönderiye Yorum Ekle",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Yorum başarıyla eklendi (201)\", function () {",
+              "    pm.response.to.have.status(201);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('id');",
+              "    pm.expect(body).to.have.property('text');",
+              "    pm.collectionVariables.set('commentIdA', body.id);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"text\": \"User A tarafından yazılmış orijinal yorum.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/posts/{{postIdA}}/comments",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "{{postIdA}}",
+            "comments"
+          ]
+        }
+      }
+    },
+    {
+      "name": "13. Gönderiyi Beğen",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Gönderi beğenme başarılı (200)\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('msg');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/posts/{{postIdA}}/like",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "{{postIdA}}",
+            "like"
+          ]
+        }
+      }
+    },
+    {
+      "name": "14. User B Kaydı",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"User B başarıyla kaydoldu - token döndü (200)\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('token');",
+              "    pm.collectionVariables.set('tokenB', body.token);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"username\": \"user_b_{{$randomInt}}\",\n    \"email\": \"user_b_{{$randomInt}}@test.com\",\n    \"password\": \"sifre12345\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/register",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "15. Başkasının Yorumunu Düzenleme",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Yetkisiz yorum düzenleme engellenmeli\", function () {",
+              "    pm.response.to.have.status(403);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenB}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"text\": \"Hacked! User B başkasının yorumunu değiştirdi.\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/posts/comments/{{commentIdA}}",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "comments",
+            "{{commentIdA}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "16. Admin Paneline Normal Kullanıcı Erişim Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Normal kullanıcı admin paneline erişemez - 403 Forbidden dönmeli\", function () {",
+              "    pm.response.to.have.status(403);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('msg');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenB}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/admin/stats",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "admin",
+            "stats"
+          ]
+        }
+      }
+    },
+    {
+      "name": "17. Gönderiyi Sil (Soft-Delete)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Gönderi soft-delete ile silindi (200)\", function () {",
+              "    pm.response.to.have.status(200);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('msg');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/posts/{{postIdA}}",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "{{postIdA}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "18. Silinen Gönderinin Arama Sonuçlarında Sızması",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Silinen gönderi arama sonuçlarında çıkmamalı\", function () {",
+              "    var body = pm.response.json();",
+              "    var postId = parseInt(pm.collectionVariables.get('postIdA'));",
+              "    var leaked = body.some(function(p) { return p.id === postId; });",
+              "    pm.expect(leaked).to.be.false;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/posts/search?q=soft-delete",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "soft-delete"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "19. SQL Injection ile Veritabanı Hata Detaylarının İfşası",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Veritabanı hata detayları istemciye sızdırılmamalı\", function () {",
+              "    var body = pm.response.json();",
+              "    pm.expect(body.error).to.be.undefined;",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/posts/search?q='",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "posts",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "q",
+              "value": "'"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "20. Mass Assignment ile Yetki Yükseltme",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Profil güncellemesinde 'role' alanı değiştirilememeli\", function () {",
+              "    var body = pm.response.json();",
+              "    pm.expect(body.user.role).to.not.equal('admin');",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenB}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"role\": \"admin\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/auth/profile",
+          "protocol": "http",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "port": "5000",
+          "path": [
+            "api",
+            "auth",
+            "profile"
+          ]
+        }
+      }
+    },
+    {
+      "name": "21. User B'yi Takip Et",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Takip başarılı (201)\", function () { pm.response.to.have.status(201); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/users/2/follow",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "2",
+            "follow"
+          ]
+        }
+      }
+    },
+    {
+      "name": "22. Kendini Takip Etme Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Kendini takip hatası (400)\", function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/users/1/follow",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "1",
+            "follow"
+          ]
+        }
+      }
+    },
+    {
+      "name": "23. User B'nin Takipçilerini Getir",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Takipçiler listelendi (200)\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/users/2/followers",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "2",
+            "followers"
+          ]
+        }
+      }
+    },
+    {
+      "name": "24. User B'ye DM Gönder",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"DM başarıyla gönderildi (201)\", function () { pm.response.to.have.status(201); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"content\": \"Merhaba User B!\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/messages/2",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "messages",
+            "2"
+          ]
+        }
+      }
+    },
+    {
+      "name": "25. Kendine DM Gönderme Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Kendine DM hatası (400)\", function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"content\": \"Kendime not\"}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/messages/1",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "messages",
+            "1"
+          ]
+        }
+      }
+    },
+    {
+      "name": "26. Mesaj Geçmişini Getir",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Mesajlar getirildi (200)\", function () { pm.response.to.have.status(200); pm.expect(pm.response.json()).to.be.an(\"array\"); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "url": {
+          "raw": "{{baseUrl}}/api/messages/2",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "messages",
+            "2"
+          ]
+        }
+      }
+    },
+    {
+      "name": "27. Gönderiyi Gerçekten Beğen (Toggle)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Gönderi beğenildi (201)\", function () { pm.response.to.have.status(201); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/posts/{{postIdA}}/like",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "posts",
+            "{{postIdA}}",
+            "like"
+          ]
+        }
+      }
+    },
+    {
+      "name": "28. Gönderiyi Beğenmekten Vazgeç (Toggle)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Beğeni kaldırıldı (200)\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "url": {
+          "raw": "{{baseUrl}}/api/posts/{{postIdA}}/like",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "posts",
+            "{{postIdA}}",
+            "like"
+          ]
+        }
+      }
+    },
+    {
+      "name": "29. User B'yi Takipten Çık",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Takipten çıkıldı (200)\", function () { pm.response.to.have.status(200); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/users/2/unfollow",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "2",
+            "unfollow"
+          ]
+        }
+      }
+    },
+    {
+      "name": "30. Takip Edilmeyen Kullanıcıyı Takipten Çıkma Denemesi",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Zaten takip edilmiyor hatası (400)\", function () { pm.response.to.have.status(400); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "url": {
+          "raw": "{{baseUrl}}/api/users/2/unfollow",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "users",
+            "2",
+            "unfollow"
+          ]
+        }
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "userA_email",
+      "value": ""
+    },
+    {
+      "key": "userA_username",
+      "value": ""
+    },
+    {
+      "key": "tokenA",
+      "value": ""
+    },
+    {
+      "key": "tokenB",
+      "value": ""
+    },
+    {
+      "key": "postIdA",
+      "value": ""
+    },
+    {
+      "key": "commentIdA",
+      "value": ""
+    }
+  ]
+}
