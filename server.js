@@ -11,7 +11,6 @@ const Like = require("./models/Like");
 const Follow = require("./models/Follow");
 const Message = require("./models/Message");
 
-// Associations
 User.hasMany(Post, { foreignKey: "userId" });
 Post.belongsTo(User, { foreignKey: "userId" });
 
