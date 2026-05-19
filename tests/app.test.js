@@ -15,7 +15,7 @@ describe("Social Media API Tests", () => {
   });
 
   describe("Auth Endpoints", () => {
-    it("should register a new user successfully", async () => {
+    it("should register a new uuser successfully", async () => {
       const res = await request(app).post("/api/auth/register").send({
         username: "testuser",
         email: "test@test.com",
