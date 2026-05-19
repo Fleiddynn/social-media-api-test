@@ -37,19 +37,16 @@ exports.getPosts = async (req, res) => {
     const detailedPosts = [];
     for (let post of posts) {
       // N+1 her post için kullanıcıyı tek tek çekiyor
-      // Çözüm: Post.findAll() içinde "include: [{ model: User, attributes: ['username'] }]" kullanılarak (Eager Loading) N+1 problemi çözülmelidir.
       const user = await User.findByPk(post.userId, {
         attributes: ["username"],
       });
 
       // N+1 her post için yorumları tek tek çekiyor
-      // Çözüm: Yorumları da aynı şekilde include dizisine ekleyerek veritabanına tek bir sorgu atılmalıdır.
       const comments = await Comment.findAll({ where: { postId: post.id } });
 
       const detailedComments = [];
       for (let comment of comments) {
         // N+2 her yorum için kullanıcıyı tek tek çekiyor
-        // Çözüm: Yorumların içindeki User modelini de nested include ile getirerek (örn: include: [{ model: Comment, include: [User] }]) gereksiz sorguların önüne geçilmelidir.
         const commentUser = await User.findByPk(comment.userId, {
           attributes: ["username"],
         });
@@ -102,14 +99,12 @@ exports.searchPosts = async (req, res) => {
 
     // "deletedAt" IS NULL kontrolü yok
     // lullanıcı girdisi direkt sorguya yapıştırılıyor sql injection var
-    // Çözüm: ORM metotları kullanılmalı veya raw sorgu kullanılacaksa bind parametreleri (replacements) kullanılarak SQL Injection önlenmelidir. Ayrıca "deletedAt IS NULL" şartı eklenmelidir.
     const query = `SELECT * FROM "Posts" WHERE content LIKE '%${q}%'`;
     const posts = await sequelize.query(query, { type: QueryTypes.SELECT });
 
     res.json(posts);
   } catch (err) {
     // Postgre mesajı direkt dönyüor
-    // Çözüm: Veritabanı hataları son kullanıcıya direkt gösterilmemeli (Information Disclosure önlenmesi için), daha genel hata mesajları dönülmelidir.
     res.status(500).json({ error: err.message });
   }
 };
@@ -142,7 +137,6 @@ exports.editComment = async (req, res) => {
     }
 
     // "comment.userId === req.user.id" yko
-    // Çözüm: Yorumu düzenleyen kişinin, yorumun sahibi olup olmadığını kontrol etmek için "if (comment.userId !== req.user.id)" şeklinde yetki kontrolü eklenmelidir.
     comment.text = req.body.text;
     await comment.save();
 
