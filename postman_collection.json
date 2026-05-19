@@ -45,17 +45,11 @@
           "raw": "{\n    \"username\": \"{{userA_username}}\",\n    \"email\": \"{{userA_email}}\",\n    \"password\": \"gecerlisifre123\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/auth/register",
+          "raw": "localhost/api/auth/register",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "register"
-          ]
+          "path": ["api", "auth", "register"]
         }
       }
     },
@@ -95,17 +89,11 @@
           "raw": "{\n    \"email\": \"{{userA_email_lower}}\",\n    \"password\": \"gecerlisifre123\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/auth/login",
+          "raw": "localhost/api/auth/login",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "login"
-          ]
+          "path": ["api", "auth", "login"]
         }
       }
     },
@@ -139,17 +127,11 @@
           "raw": "{\n    \"email\": \"{{userA_email}}\",\n    \"password\": \"gecerlisifre123\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/auth/login",
+          "raw": "localhost/api/auth/login",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "login"
-          ]
+          "path": ["api", "auth", "login"]
         }
       }
     },
@@ -182,17 +164,11 @@
           "raw": "{\n    \"email\": \"{{userA_email}}\",\n    \"password\": \"yanlisSifre999\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/auth/login",
+          "raw": "localhost/api/auth/login",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "login"
-          ]
+          "path": ["api", "auth", "login"]
         }
       }
     },
@@ -225,17 +201,11 @@
           "raw": "{\n    \"email\": \"eksik@test.com\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/auth/register",
+          "raw": "localhost/api/auth/register",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "register"
-          ]
+          "path": ["api", "auth", "register"]
         }
       }
     },
@@ -271,17 +241,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/auth/profile",
+          "raw": "localhost/api/auth/profile",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "profile"
-          ]
+          "path": ["api", "auth", "profile"]
         }
       }
     },
@@ -303,17 +267,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/auth/profile",
+          "raw": "localhost/api/auth/profile",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "profile"
-          ]
+          "path": ["api", "auth", "profile"]
         }
       }
     },
@@ -358,16 +316,11 @@
           "raw": "{\n    \"content\": \"Bu post soft-delete testi için silinecektir.\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/posts",
+          "raw": "localhost/api/posts",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts"
-          ]
+          "path": ["api", "posts"]
         }
       }
     },
@@ -398,16 +351,11 @@
           "raw": "{\n    \"content\": \"Yetkisiz gönderi denemesi.\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/posts",
+          "raw": "localhost/api/posts",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts"
-          ]
+          "path": ["api", "posts"]
         }
       }
     },
@@ -450,16 +398,11 @@
           "raw": "{\n    \"content\": \"\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/posts",
+          "raw": "localhost/api/posts",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts"
-          ]
+          "path": ["api", "posts"]
         }
       }
     },
@@ -483,16 +426,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/posts",
+          "raw": "localhost/api/posts",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts"
-          ]
+          "path": ["api", "posts"]
         }
       }
     },
@@ -537,18 +475,11 @@
           "raw": "{\n    \"text\": \"User A tarafından yazılmış orijinal yorum.\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/posts/{{postIdA}}/comments",
+          "raw": "localhost/api/posts/{{postIdA}}/comments",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "{{postIdA}}",
-            "comments"
-          ]
+          "path": ["api", "posts", "{{postIdA}}", "comments"]
         }
       }
     },
@@ -582,18 +513,11 @@
         "method": "POST",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/posts/{{postIdA}}/like",
+          "raw": "localhost/api/posts/{{postIdA}}/like",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "{{postIdA}}",
-            "like"
-          ]
+          "path": ["api", "posts", "{{postIdA}}", "like"]
         }
       }
     },
@@ -627,17 +551,11 @@
           "raw": "{\n    \"username\": \"user_b_{{$randomInt}}\",\n    \"email\": \"user_b_{{$randomInt}}@test.com\",\n    \"password\": \"sifre12345\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/auth/register",
+          "raw": "localhost/api/auth/register",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "register"
-          ]
+          "path": ["api", "auth", "register"]
         }
       }
     },
@@ -678,18 +596,11 @@
           "raw": "{\n    \"text\": \"Hacked! User B başkasının yorumunu değiştirdi.\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/posts/comments/{{commentIdA}}",
+          "raw": "localhost/api/posts/comments/{{commentIdA}}",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "comments",
-            "{{commentIdA}}"
-          ]
+          "path": ["api", "posts", "comments", "{{commentIdA}}"]
         }
       }
     },
@@ -723,17 +634,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/admin/stats",
+          "raw": "localhost/api/admin/stats",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "admin",
-            "stats"
-          ]
+          "path": ["api", "admin", "stats"]
         }
       }
     },
@@ -767,17 +672,11 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/posts/{{postIdA}}",
+          "raw": "localhost/api/posts/{{postIdA}}",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "{{postIdA}}"
-          ]
+          "path": ["api", "posts", "{{postIdA}}"]
         }
       }
     },
@@ -802,17 +701,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/posts/search?q=soft-delete",
+          "raw": "localhost/api/posts/search?q=soft-delete",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "search"
-          ],
+          "path": ["api", "posts", "search"],
           "query": [
             {
               "key": "q",
@@ -841,17 +734,11 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/posts/search?q='",
+          "raw": "localhost/api/posts/search?q='",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "posts",
-            "search"
-          ],
+          "path": ["api", "posts", "search"],
           "query": [
             {
               "key": "q",
@@ -899,17 +786,11 @@
           "raw": "{\n    \"role\": \"admin\"\n}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/auth/profile",
+          "raw": "localhost/api/auth/profile",
           "protocol": "http",
-          "host": [
-            "{{baseUrl}}"
-          ],
+          "host": ["localhost"],
           "port": "5000",
-          "path": [
-            "api",
-            "auth",
-            "profile"
-          ]
+          "path": ["api", "auth", "profile"]
         }
       }
     },
@@ -938,16 +819,10 @@
         },
         "method": "POST",
         "url": {
-          "raw": "{{baseUrl}}/api/users/2/follow",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "users",
-            "2",
-            "follow"
-          ]
+          "raw": "localhost/api/users/2/follow",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "users", "2", "follow"]
         }
       }
     },
@@ -976,16 +851,10 @@
         },
         "method": "POST",
         "url": {
-          "raw": "{{baseUrl}}/api/users/1/follow",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "users",
-            "1",
-            "follow"
-          ]
+          "raw": "localhost/api/users/1/follow",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "users", "1", "follow"]
         }
       }
     },
@@ -1004,16 +873,10 @@
       "request": {
         "method": "GET",
         "url": {
-          "raw": "{{baseUrl}}/api/users/2/followers",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "users",
-            "2",
-            "followers"
-          ]
+          "raw": "localhost/api/users/2/followers",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "users", "2", "followers"]
         }
       }
     },
@@ -1052,15 +915,10 @@
           "raw": "{\"content\": \"Merhaba User B!\"}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/messages/2",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "messages",
-            "2"
-          ]
+          "raw": "localhost/api/messages/2",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "messages", "2"]
         }
       }
     },
@@ -1099,15 +957,10 @@
           "raw": "{\"content\": \"Kendime not\"}"
         },
         "url": {
-          "raw": "{{baseUrl}}/api/messages/1",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "messages",
-            "1"
-          ]
+          "raw": "localhost/api/messages/1",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "messages", "1"]
         }
       }
     },
@@ -1136,15 +989,10 @@
         },
         "method": "GET",
         "url": {
-          "raw": "{{baseUrl}}/api/messages/2",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "messages",
-            "2"
-          ]
+          "raw": "localhost/api/messages/2",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "messages", "2"]
         }
       }
     },
@@ -1173,16 +1021,10 @@
         },
         "method": "POST",
         "url": {
-          "raw": "{{baseUrl}}/api/posts/{{postIdA}}/like",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "posts",
-            "{{postIdA}}",
-            "like"
-          ]
+          "raw": "localhost/api/posts/{{postIdA}}/like",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "posts", "{{postIdA}}", "like"]
         }
       }
     },
@@ -1211,16 +1053,10 @@
         },
         "method": "POST",
         "url": {
-          "raw": "{{baseUrl}}/api/posts/{{postIdA}}/like",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "posts",
-            "{{postIdA}}",
-            "like"
-          ]
+          "raw": "localhost/api/posts/{{postIdA}}/like",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "posts", "{{postIdA}}", "like"]
         }
       }
     },
@@ -1249,16 +1085,10 @@
         },
         "method": "DELETE",
         "url": {
-          "raw": "{{baseUrl}}/api/users/2/unfollow",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "users",
-            "2",
-            "unfollow"
-          ]
+          "raw": "localhost/api/users/2/unfollow",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "users", "2", "unfollow"]
         }
       }
     },
@@ -1287,16 +1117,10 @@
         },
         "method": "DELETE",
         "url": {
-          "raw": "{{baseUrl}}/api/users/2/unfollow",
-          "host": [
-            "{{baseUrl}}"
-          ],
-          "path": [
-            "api",
-            "users",
-            "2",
-            "unfollow"
-          ]
+          "raw": "localhost/api/users/2/unfollow",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "users", "2", "unfollow"]
         }
       }
     }
