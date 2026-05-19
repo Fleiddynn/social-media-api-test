@@ -27,7 +27,8 @@
               "    var body = pm.response.json();",
               "    pm.expect(body).to.have.property('token');",
               "    pm.collectionVariables.set('tokenA', body.token);",
-              "});"
+              "});",
+              "pm.sendRequest({ url: 'localhost:5000/api/auth/profile', method: 'GET', header: { 'Authorization': 'Bearer ' + pm.collectionVariables.get('tokenA') }}, function (err, response) { if (!err) { pm.collectionVariables.set('userA_id', response.json().id); } });"
             ]
           }
         }
@@ -533,7 +534,8 @@
               "    var body = pm.response.json();",
               "    pm.expect(body).to.have.property('token');",
               "    pm.collectionVariables.set('tokenB', body.token);",
-              "});"
+              "});",
+              "pm.sendRequest({ url: 'localhost:5000/api/auth/profile', method: 'GET', header: { 'Authorization': 'Bearer ' + pm.collectionVariables.get('tokenB') }}, function (err, response) { if (!err) { pm.collectionVariables.set('userB_id', response.json().id); } });"
             ]
           }
         }
@@ -819,10 +821,10 @@
         },
         "method": "POST",
         "url": {
-          "raw": "localhost/api/users/2/follow",
+          "raw": "localhost/api/users/{{userB_id}}/follow",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "users", "2", "follow"]
+          "path": ["api", "users", "{{userB_id}}", "follow"]
         }
       }
     },
@@ -851,10 +853,10 @@
         },
         "method": "POST",
         "url": {
-          "raw": "localhost/api/users/1/follow",
+          "raw": "localhost/api/users/{{userA_id}}/follow",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "users", "1", "follow"]
+          "path": ["api", "users", "{{userA_id}}", "follow"]
         }
       }
     },
@@ -873,10 +875,10 @@
       "request": {
         "method": "GET",
         "url": {
-          "raw": "localhost/api/users/2/followers",
+          "raw": "localhost/api/users/{{userB_id}}/followers",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "users", "2", "followers"]
+          "path": ["api", "users", "{{userB_id}}", "followers"]
         }
       }
     },
@@ -915,10 +917,10 @@
           "raw": "{\"content\": \"Merhaba User B!\"}"
         },
         "url": {
-          "raw": "localhost/api/messages/2",
+          "raw": "localhost/api/messages/{{userB_id}}",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "messages", "2"]
+          "path": ["api", "messages", "{{userB_id}}"]
         }
       }
     },
@@ -957,10 +959,10 @@
           "raw": "{\"content\": \"Kendime not\"}"
         },
         "url": {
-          "raw": "localhost/api/messages/1",
+          "raw": "localhost/api/messages/{{userA_id}}",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "messages", "1"]
+          "path": ["api", "messages", "{{userA_id}}"]
         }
       }
     },
@@ -989,10 +991,57 @@
         },
         "method": "GET",
         "url": {
-          "raw": "localhost/api/messages/2",
+          "raw": "localhost/api/messages/{{userB_id}}",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "messages", "2"]
+          "path": ["api", "messages", "{{userB_id}}"]
+        }
+      }
+    },
+    {
+      "name": "26b. Toggle Testleri için Yeni Gönderi Oluştur",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Gönderi başarıyla oluşturuldu (201)\", function () {",
+              "    pm.response.to.have.status(201);",
+              "    var body = pm.response.json();",
+              "    pm.expect(body).to.have.property('id');",
+              "    pm.collectionVariables.set('postIdB', body.id);",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{tokenA}}",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n    \"content\": \"Bu post beğeni toggle testleri için kullanılacak.\"\n}"
+        },
+        "url": {
+          "raw": "localhost/api/posts",
+          "host": ["localhost"],
+          "port": "5000",
+          "path": ["api", "posts"]
         }
       }
     },
@@ -1003,7 +1052,7 @@
           "listen": "test",
           "script": {
             "exec": [
-              "pm.test(\"Gönderi beğenildi (201)\", function () { pm.response.to.have.status(201); });"
+              "pm.test(\"Gönderi beğenildi (200)\", function () { pm.response.to.have.status(200); });"
             ]
           }
         }
@@ -1021,10 +1070,10 @@
         },
         "method": "POST",
         "url": {
-          "raw": "localhost/api/posts/{{postIdA}}/like",
+          "raw": "localhost/api/posts/{{postIdB}}/like",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "posts", "{{postIdA}}", "like"]
+          "path": ["api", "posts", "{{postIdB}}", "like"]
         }
       }
     },
@@ -1053,10 +1102,10 @@
         },
         "method": "POST",
         "url": {
-          "raw": "localhost/api/posts/{{postIdA}}/like",
+          "raw": "localhost/api/posts/{{postIdB}}/like",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "posts", "{{postIdA}}", "like"]
+          "path": ["api", "posts", "{{postIdB}}", "like"]
         }
       }
     },
@@ -1085,10 +1134,10 @@
         },
         "method": "DELETE",
         "url": {
-          "raw": "localhost/api/users/2/unfollow",
+          "raw": "localhost/api/users/{{userB_id}}/unfollow",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "users", "2", "unfollow"]
+          "path": ["api", "users", "{{userB_id}}", "unfollow"]
         }
       }
     },
@@ -1117,10 +1166,10 @@
         },
         "method": "DELETE",
         "url": {
-          "raw": "localhost/api/users/2/unfollow",
+          "raw": "localhost/api/users/{{userB_id}}/unfollow",
           "host": ["localhost"],
           "port": "5000",
-          "path": ["api", "users", "2", "unfollow"]
+          "path": ["api", "users", "{{userB_id}}", "unfollow"]
         }
       }
     }
@@ -1135,6 +1184,14 @@
       "value": ""
     },
     {
+      "key": "userA_id",
+      "value": ""
+    },
+    {
+      "key": "userB_id",
+      "value": ""
+    },
+    {
       "key": "tokenA",
       "value": ""
     },
@@ -1144,6 +1201,10 @@
     },
     {
       "key": "postIdA",
+      "value": ""
+    },
+    {
+      "key": "postIdB",
       "value": ""
     },
     {

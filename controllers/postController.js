@@ -164,7 +164,7 @@ exports.likePost = async (req, res) => {
       return res.json({ msg: "Beğeni kaldırıldı", postId, userId });
     } else {
       await Like.create({ postId, userId });
-      return res.status(201).json({ msg: "Gönderi beğenildi", postId, userId });
+      return res.status(200).json({ msg: "Gönderi beğenildi", postId, userId });
     }
   } catch (err) {
     console.error(err.message);
