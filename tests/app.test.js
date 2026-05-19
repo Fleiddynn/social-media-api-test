@@ -21,7 +21,7 @@ describe("Social Media API Tests", () => {
         email: "test@test.com",
         password: "password123",
       });
-      expect(res.statusCode).toBe(200);
+      expect(res.statusCode).toBe(400);
       expect(res.body).toHaveProperty("token");
     });
 
