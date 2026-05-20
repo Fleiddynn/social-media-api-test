@@ -14,7 +14,7 @@ describe("Social Media API Tests", () => {
     await sequelize.close();
   });
 
-  describe("Auth Endpoints", () => {
+  describe("Authg Endpoints", () => {
     it("should register a new user successfully", async () => {
       const res = await request(app).post("/api/auth/register").send({
         username: "testuser",
