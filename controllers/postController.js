@@ -25,6 +25,44 @@ exports.createPost = async (req, res) => {
   }
 };
 
+/*
+exports.getPosts = async (req, res) => {
+  try {
+    let limit = req.query.limit ? parseInt(req.query.limit) : null;
+
+    const posts = await Post.findAll({
+      limit: limit,
+      order: [["createdAt", "DESC"]],
+      include: [
+        { model: User, attributes: ["username"] },
+        {
+          model: Comment,
+          include: [{ model: User, attributes: ["username"] }],
+        },
+      ],
+    });
+
+    const detailedPosts = posts.map((post) => ({
+      id: post.id,
+      content: post.content,
+      createdAt: post.createdAt,
+      User: post.User,
+      Comments: post.Comments.map((comment) => ({
+        id: comment.id,
+        text: comment.text,
+        createdAt: comment.createdAt,
+        User: comment.User,
+      })),
+    }));
+
+    res.json(detailedPosts);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Sunucu Hatası");
+  }
+}
+  */
+
 exports.getPosts = async (req, res) => {
   try {
     let limit = req.query.limit ? parseInt(req.query.limit) : null;
